@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toDoList="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/cancel_adding"
+    android:title="@string/cancel"
+    android:checkable="true"
+    android:icon="@mipmap/cancel_icon_round"/>
+    <item
+        android:id="@+id/add_photo"
+        android:title="@string/add_photo"
+        android:checkable="true"
+        android:icon="@mipmap/add_icon_round"/>
+    <item
+        android:id="@+id/apply_adding"
+        android:title="@string/apply"
+        android:checkable="true"
+        android:icon="@mipmap/apply_icon_round"/>
+</menu>
