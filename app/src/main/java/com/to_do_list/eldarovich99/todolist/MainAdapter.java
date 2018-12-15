@@ -39,7 +39,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        switch (mRecords.get(position).defineElement()){
+        switch (mRecords.get(position).DefineElement()){
             case SIMPLE:
                 return TYPE_SIMPLE;
             case EXTENDED:

@@ -1,10 +1,9 @@
 package com.to_do_list.eldarovich99.todolist;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,10 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +50,7 @@ public class AddRecordFragment extends Fragment{
             startActivityForResult(galleryPickerIntent, GALLERY_REQUEST);
         });
         mApplyButton.setOnClickListener(v->{
+            SQLiteDatabase database = new DBHelper(getActivity().getApplicationContext()).getWritableDatabase();
         });
     }
 

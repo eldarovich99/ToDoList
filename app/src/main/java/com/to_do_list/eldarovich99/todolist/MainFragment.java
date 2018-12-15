@@ -15,6 +15,7 @@ import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +44,7 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        SimpleRecord record = new SimpleRecord("Feed the cat", "Buy whiskas", "14.12.2018");
+        SimpleRecord record = new SimpleRecord(UUID.randomUUID(),"Feed the cat", "Buy whiskas", "14.12.2018");
         List<SimpleRecord> records = new ArrayList<>(Collections.nCopies(100,record));
 
         mRecyclerView.setAdapter(new MainAdapter(records));
