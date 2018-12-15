@@ -1,27 +1,28 @@
 package com.to_do_list.eldarovich99.todolist.records;
 
-import java.net.URI;
+import android.net.Uri;
+
 import java.util.Date;
 import java.util.UUID;
 
 public class ExtendedRecord extends SimpleRecord {
-    private URI mPhoto;
+    private Uri mPhoto;
 
-    public ExtendedRecord(String title, String text, URI photo) {
+    public ExtendedRecord(String title, String text, Uri photo) {
         super(title, text);
         mPhoto = photo;
     }
 
-    public ExtendedRecord(UUID ID, String title, String text, Date date, Boolean isSolved, URI photo) {
+    public ExtendedRecord(UUID ID, String title, String text, Date date, Boolean isSolved, Uri photo) {
         super(ID, title, text, date, isSolved);
         mPhoto = photo;
     }
 
-    public URI getPhoto() {
+    public Uri getPhoto() {
         return mPhoto;
     }
 
-    public void setPhoto(URI photo) {
+    public void setPhoto(Uri photo) {
         mPhoto = photo;
     }
 

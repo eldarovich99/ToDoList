@@ -2,8 +2,8 @@ package com.to_do_list.eldarovich99.todolist.storage;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.net.Uri;
 
-import java.net.URI;
 import com.to_do_list.eldarovich99.todolist.records.ExtendedRecord;
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 
@@ -28,7 +28,7 @@ public class RecordCursorWrapper extends CursorWrapper {
         int isSolved = getInt(getColumnIndex(DbScheme.ToDoListTable.Columns.SOLVED));
         String imageUri = getString(getColumnIndex(DbScheme.ToDoListTable.Columns.URI));
         if (imageUri!=null){
-            return new ExtendedRecord(UUID.fromString(id), title,text,new Date(date),isSolved>0, URI.create(imageUri));
+            return new ExtendedRecord(UUID.fromString(id), title,text,new Date(date),isSolved>0, Uri.parse(imageUri));
         }
         return new SimpleRecord(UUID.fromString(id), title, text, new Date(date),isSolved>0);
     }

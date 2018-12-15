@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.to_do_list.eldarovich99.todolist.records.ExtendedRecord;
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 
 import java.text.SimpleDateFormat;
@@ -73,10 +74,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void initExpandedLayout(MainExtendedViewHolder viewHolder, int position){
+        ExtendedRecord record = (ExtendedRecord) mRecords.get(position);
         String date = new SimpleDateFormat("hh:mm   dd.MM.yyyy",
-                new Locale("ru", "RU")).format( mRecords.get(position).getDate());
+                new Locale("ru", "RU")).format( record.getDate());
         viewHolder.mDate.setText(date);
-        viewHolder.mTitle.setText(mRecords.get(position).getTitle());
+        viewHolder.mTitle.setText(record.getTitle());
+        viewHolder.mPhoto.setImageURI(record.getPhoto());
         //photo??
     }
 
@@ -101,7 +104,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public MainExtendedViewHolder(@NonNull View itemView) {
             super(itemView);
             mDate = itemView.findViewById(R.id.date_extended_text_view);
-            mDate = itemView.findViewById(R.id.title_extended_text_view);
+            mTitle = itemView.findViewById(R.id.title_extended_text_view);
             mPhoto = itemView.findViewById(R.id.photo_image_view);
         }
     }

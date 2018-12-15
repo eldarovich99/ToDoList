@@ -14,8 +14,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 
+import com.to_do_list.eldarovich99.todolist.records.ExtendedRecord;
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 import com.to_do_list.eldarovich99.todolist.storage.ToDoListStorage;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +29,7 @@ public class AddRecordFragment extends Fragment{
     @BindView(R.id.title_edit_text) EditText mTitleEditText;
     @BindView(R.id.note_edit_text) EditText mNoteEditText;
     @BindView(R.id.imageview) ImageView mImageView;
+    private Uri mImageUri;
     static final int GALLERY_REQUEST = 1;
     static final int PHOTO_REQUEST = 2;
 
@@ -54,9 +57,15 @@ public class AddRecordFragment extends Fragment{
             startActivityForResult(galleryPickerIntent, GALLERY_REQUEST);
         });
         mApplyButton.setOnClickListener(v->{
-            mRecord = new SimpleRecord(mTitleEditText.getText().toString(),
-                    mNoteEditText.getText().toString());
-            ToDoListStorage.get(getContext()).addRecord(mRecord);
+            if (mImageUri==null) {
+                mRecord = new SimpleRecord(mTitleEditText.getText().toString(),
+                        mNoteEditText.getText().toString());
+                ToDoListStorage.get(getContext()).addRecord(mRecord);
+            }
+            else{
+                mRecord = new ExtendedRecord(mTitleEditText.getText().toString(), mNoteEditText.getText().toString(),mImageUri);
+                ToDoListStorage.get(getContext()).addRecord(mRecord);
+            }
         });
     }
 
@@ -64,8 +73,8 @@ public class AddRecordFragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case GALLERY_REQUEST:
-                Uri imageUri = data.getData();
-                mImageView.setImageURI(imageUri);
+                mImageUri = data.getData();
+                mImageView.setImageURI(mImageUri);
                 break;
             case PHOTO_REQUEST:
                 Uri photoUri = data.getData();
