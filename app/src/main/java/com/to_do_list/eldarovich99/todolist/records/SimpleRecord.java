@@ -22,6 +22,12 @@ public  class SimpleRecord {
         mText = text;
     }
 
+    public SimpleRecord(UUID ID, String title, String text) {
+        mID = ID;
+        mTitle = title;
+        mText = text;
+    }
+
     public ItemType defineElement(){
         return ItemType.SIMPLE;
     }

@@ -11,6 +11,11 @@ public class ExtendedRecord extends SimpleRecord {
         mPhoto = photo;
     }
 
+    public ExtendedRecord(UUID ID, String title, String text, URI photo) {
+        super(ID, title, text);
+        mPhoto = photo;
+    }
+
     public URI getPhoto() {
         return mPhoto;
     }
