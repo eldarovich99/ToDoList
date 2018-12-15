@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + ", " + DbScheme.ToDoListTable.Columns.TEXT
                 + ", " + DbScheme.ToDoListTable.Columns.TITLE
                 + ", " + DbScheme.ToDoListTable.Columns.URI
-                + ", " + DbScheme.ToDoListTable.Columns.SOLVED);
+                + ", " + DbScheme.ToDoListTable.Columns.SOLVED + ")");
     }
 
     @Override

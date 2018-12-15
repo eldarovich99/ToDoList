@@ -10,14 +10,11 @@ import com.to_do_list.eldarovich99.todolist.records.ItemType;
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
-
 public class ToDoListStorage {
     private static ToDoListStorage toDoListStorage;
     private Context mContext;
-    private SQLiteDatabase mDatabase;
+    private static SQLiteDatabase mDatabase;
 
    ToDoListStorage(Context context){
        mContext = context.getApplicationContext();
@@ -31,12 +28,6 @@ public class ToDoListStorage {
         return toDoListStorage;
     }
 
-    public static List<SimpleRecord> getRecords(){
-        SimpleRecord record = new SimpleRecord("Feed the cat", "Buy whiskas");
-        List<SimpleRecord> records = new ArrayList<>(Collections.nCopies(100,record));
-        return records;
-    }
-
     private static ContentValues getContentValues(SimpleRecord record){         // this is polymorphism
        ContentValues values = new ContentValues();
        values.put(DbScheme.ToDoListTable.Columns.UUID, record.getID().toString());
@@ -48,14 +39,10 @@ public class ToDoListStorage {
        return values;
     }
 
-    private Cursor queryRecords(String whereClause, String[] whereArgs){
+    private static RecordCursorWrapper queryRecords(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(DbScheme.ToDoListTable.NAME,
                 null, whereClause, whereArgs, null, null, null);
-        return cursor;
-    }
-
-    public static SimpleRecord getRecord(UUID id){
-       return null;
+        return new RecordCursorWrapper(cursor   );
     }
 
     public void updateRecord(SimpleRecord record){
@@ -64,7 +51,32 @@ public class ToDoListStorage {
        mDatabase.update(DbScheme.ToDoListTable.NAME, values, DbScheme.ToDoListTable.Columns.UUID + " = ?", new String[]{id});
     }
 
-    private void AddRecord(SimpleRecord record){
+    public void addRecord(SimpleRecord record){
         mDatabase.insert(DbScheme.ToDoListTable.NAME, null, getContentValues(record));
     }
+
+    public static List<SimpleRecord> getRecords(){
+       List<SimpleRecord> records = new ArrayList<SimpleRecord>();
+       RecordCursorWrapper cursorWrapper = queryRecords(null, null);
+       try{
+           cursorWrapper.moveToFirst();
+           while (!cursorWrapper.isAfterLast()) {
+               records.add(cursorWrapper.getRecord());
+               cursorWrapper.moveToNext();
+           }
+       }
+       finally {
+           cursorWrapper.close();
+       }
+       return records;
+    }
+
+    /*public static SimpleRecord getRecord(UUID id){
+       return null;
+    }*/
+    /*public static List<SimpleRecord> getRecords(){
+        SimpleRecord record = new SimpleRecord("Feed the cat", "Buy whiskas");
+        List<SimpleRecord> records = new ArrayList<>(Collections.nCopies(100,record));
+        return records;
+    }*/
 }

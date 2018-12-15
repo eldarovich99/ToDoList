@@ -24,12 +24,18 @@ public class RecordCursorWrapper extends CursorWrapper {
         String id = getString(getColumnIndex(DbScheme.ToDoListTable.Columns.UUID));
         String title = getString(getColumnIndex(DbScheme.ToDoListTable.Columns.TITLE));
         String text = getString(getColumnIndex(DbScheme.ToDoListTable.Columns.TEXT));
-        String date = getString(getColumnIndex(DbScheme.ToDoListTable.Columns.DATE));
+        long date = getLong(getColumnIndex(DbScheme.ToDoListTable.Columns.DATE));
         int isSolved = getInt(getColumnIndex(DbScheme.ToDoListTable.Columns.SOLVED));
         String imageUri = getString(getColumnIndex(DbScheme.ToDoListTable.Columns.URI));
         if (imageUri!=null){
-            return new ExtendedRecord(UUID.fromString(id), title,text, URI.create(imageUri));
+            ExtendedRecord record = new ExtendedRecord(UUID.fromString(id), title,text, URI.create(imageUri));
+            record.setDate(new Date(date));
+            record.setSolved(isSolved>0);
+            return record;
         }
-        return new SimpleRecord(UUID.fromString(id), title, text);
+        SimpleRecord record = new SimpleRecord(UUID.fromString(id), title, text);
+        record.setDate(new Date(date));
+        record.setSolved(isSolved>0);
+        return record;
     }
 }

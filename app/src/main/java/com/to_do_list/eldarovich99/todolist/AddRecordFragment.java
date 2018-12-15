@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -23,9 +24,12 @@ public class AddRecordFragment extends Fragment{
     @BindView(R.id.cancel_button) ImageButton mCancelButton;
     @BindView(R.id.add_photo_button) ImageButton mAddPhotoButton;
     @BindView(R.id.apply_button) ImageButton mApplyButton;
+    @BindView(R.id.title_edit_text) EditText mTitleEditText;
+    @BindView(R.id.note_edit_text) EditText mNoteEditText;
     @BindView(R.id.imageview) ImageView mImageView;
     static final int GALLERY_REQUEST = 1;
     static final int PHOTO_REQUEST = 2;
+
     SimpleRecord mRecord;
     public static AddRecordFragment newInstance() {
         //Bundle args = new Bundle();
@@ -50,6 +54,9 @@ public class AddRecordFragment extends Fragment{
             startActivityForResult(galleryPickerIntent, GALLERY_REQUEST);
         });
         mApplyButton.setOnClickListener(v->{
+            mRecord = new SimpleRecord(mTitleEditText.getText().toString(),
+                    mNoteEditText.getText().toString());
+            ToDoListStorage.get(getContext()).addRecord(mRecord);
         });
     }
 
@@ -71,7 +78,7 @@ public class AddRecordFragment extends Fragment{
     public void onPause() {
         super.onPause();
 
-        ToDoListStorage.get(getContext()).updateRecord(mRecord);
+        //if (mRecord!=null)ToDoListStorage.get(getContext()).updateRecord(mRecord);
     }
 /*
     private File savePhoto() throws IOException {

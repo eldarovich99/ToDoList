@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
+import com.to_do_list.eldarovich99.todolist.storage.DbScheme;
 import com.to_do_list.eldarovich99.todolist.storage.ToDoListStorage;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //SimpleRecord record = new SimpleRecord(UUID.randomUUID(),"Feed the cat", "Buy whiskas", "14.12.2018");
+        ToDoListStorage.get(getActivity().getApplicationContext());
         List<SimpleRecord> records = ToDoListStorage.getRecords();
 
         mRecyclerView.setAdapter(new MainAdapter(records));
