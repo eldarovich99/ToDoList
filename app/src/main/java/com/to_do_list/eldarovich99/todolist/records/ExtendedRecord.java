@@ -1,12 +1,13 @@
 package com.to_do_list.eldarovich99.todolist.records;
 
 import java.net.URI;
+import java.util.UUID;
 
 public class ExtendedRecord extends SimpleRecord {
-    URI mPhoto;
+    private URI mPhoto;
 
-    public ExtendedRecord(String title, String text, String date, URI photo) {
-        super(title, text, date);
+    public ExtendedRecord(String title, String text, URI photo) {
+        super(title, text);
         mPhoto = photo;
     }
 
@@ -19,7 +20,7 @@ public class ExtendedRecord extends SimpleRecord {
     }
 
     @Override
-    public ItemType DefineElement() {
+    public ItemType defineElement() {
         return ItemType.EXTENDED;
     }
 }

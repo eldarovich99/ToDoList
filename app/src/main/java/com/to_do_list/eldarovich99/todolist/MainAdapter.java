@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_SIMPLE = 1;
@@ -39,7 +41,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        switch (mRecords.get(position).DefineElement()){
+        switch (mRecords.get(position).defineElement()){
             case SIMPLE:
                 return TYPE_SIMPLE;
             case EXTENDED:
@@ -64,12 +66,16 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void initSimpleLayout(MainSimpleViewHolder viewHolder, int position){
-        viewHolder.mDate.setText(mRecords.get(position).getDate());
+        String date = new SimpleDateFormat("hh:mm   dd.MM.yyyy",
+                new Locale("ru", "RU")).format( mRecords.get(position).getDate());
+        viewHolder.mDate.setText(date);
         viewHolder.mTitle.setText(mRecords.get(position).getTitle());
     }
 
     private void initExpandedLayout(MainExtendedViewHolder viewHolder, int position){
-        viewHolder.mDate.setText(mRecords.get(position).getDate());
+        String date = new SimpleDateFormat("hh:mm   dd.MM.yyyy",
+                new Locale("ru", "RU")).format( mRecords.get(position).getDate());
+        viewHolder.mDate.setText(date);
         viewHolder.mTitle.setText(mRecords.get(position).getTitle());
         //photo??
     }

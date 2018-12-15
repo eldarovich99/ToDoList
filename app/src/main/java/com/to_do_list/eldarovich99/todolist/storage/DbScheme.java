@@ -1,4 +1,4 @@
-package com.to_do_list.eldarovich99.todolist;
+package com.to_do_list.eldarovich99.todolist.storage;
 
 public class DbScheme {
     public static final class ToDoListTable{

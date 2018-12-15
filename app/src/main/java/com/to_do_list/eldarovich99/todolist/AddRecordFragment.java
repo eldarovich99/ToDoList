@@ -1,7 +1,6 @@
 package com.to_do_list.eldarovich99.todolist;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 
-import java.util.ArrayList;
+import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
+import com.to_do_list.eldarovich99.todolist.storage.ToDoListStorage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +26,7 @@ public class AddRecordFragment extends Fragment{
     @BindView(R.id.imageview) ImageView mImageView;
     static final int GALLERY_REQUEST = 1;
     static final int PHOTO_REQUEST = 2;
+    SimpleRecord mRecord;
     public static AddRecordFragment newInstance() {
         //Bundle args = new Bundle();
         AddRecordFragment fragment = new AddRecordFragment();
@@ -50,7 +50,6 @@ public class AddRecordFragment extends Fragment{
             startActivityForResult(galleryPickerIntent, GALLERY_REQUEST);
         });
         mApplyButton.setOnClickListener(v->{
-            SQLiteDatabase database = new DBHelper(getActivity().getApplicationContext()).getWritableDatabase();
         });
     }
 
@@ -68,7 +67,13 @@ public class AddRecordFragment extends Fragment{
         }
     }
 
-    /*
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        ToDoListStorage.get(getContext()).updateRecord(mRecord);
+    }
+/*
     private File savePhoto() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";

@@ -1,4 +1,4 @@
-package com.to_do_list.eldarovich99.todolist;
+package com.to_do_list.eldarovich99.todolist.storage;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
