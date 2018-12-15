@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.to_do_list.eldarovich99.todolist.records.ExtendedRecord;
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 
@@ -79,7 +80,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 new Locale("ru", "RU")).format( record.getDate());
         viewHolder.mDate.setText(date);
         viewHolder.mTitle.setText(record.getTitle());
-        viewHolder.mPhoto.setImageURI(record.getPhoto());
+        Glide.with(viewHolder.itemView).load(record.getPhoto()).into(viewHolder.mPhoto);
         //photo??
     }
 
