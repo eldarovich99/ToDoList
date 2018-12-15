@@ -15,17 +15,19 @@ public  class SimpleRecord {
 
     private Boolean mIsSolved = false;
 
-    public SimpleRecord(String title, String text) {
+    public SimpleRecord(String title, String text) {        //constructor for generating records while you add a record
         mID = UUID.randomUUID();
         mDate = new Date();
         mTitle = title;
         mText = text;
     }
 
-    public SimpleRecord(UUID ID, String title, String text) {
+    public SimpleRecord(UUID ID, String title, String text, Date date, Boolean isSolved) {  //constructor for getting records from datebase
         mID = ID;
         mTitle = title;
         mText = text;
+        mDate = date;
+        mIsSolved = isSolved;
     }
 
     public ItemType defineElement(){
