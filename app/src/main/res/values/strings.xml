@@ -4,4 +4,6 @@
     <string name="cancel">Отмена</string>
     <string name="apply">Apply</string>
     <string name="add_photo">Добавить фото</string>
+    <string name="title">Заголовок:</string>
+    <string name="text">Текст:</string>
 </resources>
