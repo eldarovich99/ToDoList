@@ -32,12 +32,15 @@ public class AddRecordActivity extends AppCompatActivity {
     static final int GALLERY_REQUEST = 1;
     static final int PHOTO_REQUEST = 2;
     private SimpleRecord mRecord;
+    private int mPosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_record);
         Intent intent = getIntent();
-        String id = intent.getStringExtra(MainActivity.EDIT_RECORD);
+        String id = intent.getStringExtra(MainActivity.EDIT_RECORD_ID);
+        mPosition = intent.getIntExtra(MainActivity.EDIT_RECORD_POSITION, -1);
         ButterKnife.bind(this);
         if (id!=null){
             mRecord = ToDoListStorage.getRecord(UUID.fromString(id));
@@ -86,6 +89,7 @@ public class AddRecordActivity extends AppCompatActivity {
                 }
 
                 Intent intent = getIntent();
+                intent.putExtra(MainActivity.EDIT_RECORD_POSITION, mPosition);
                 setResult(RESULT_OK, intent);
                 finish();
             }

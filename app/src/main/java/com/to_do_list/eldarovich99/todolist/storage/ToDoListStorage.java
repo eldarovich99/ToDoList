@@ -55,6 +55,7 @@ public class ToDoListStorage {
         mDatabase.insert(DbScheme.ToDoListTable.NAME, null, getContentValues(record));
     }
 
+
     public static List<SimpleRecord> getRecords(){
        List<SimpleRecord> records = new ArrayList<>();
        RecordCursorWrapper cursorWrapper = queryRecords(null, null);

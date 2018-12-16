@@ -8,20 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 import com.to_do_list.eldarovich99.todolist.storage.ToDoListStorage;
 
 import java.util.List;
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
     public static final int ADD_RECORD = 3;
-    public static final String EDIT_RECORD = "edit";
+    public static final String EDIT_RECORD_ID = "edit";
+    public static final String EDIT_RECORD_POSITION = "position";
     @BindView(R.id.recycler) RecyclerView mRecyclerView;
     @BindView(R.id.add_image_button) ImageButton mAddButton;
     private MainAdapter mAdapter;
@@ -38,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener onClickListener = v->{
             Intent intent = new Intent(this, AddRecordActivity.class);
             int position = mRecyclerView.getChildLayoutPosition(v);
-            intent.putExtra(EDIT_RECORD,mRecords.get(position).getID().toString());
+            intent.putExtra(EDIT_RECORD_ID,mRecords.get(position).getID().toString());     //intent.putExtra(EDIT_RECORD_ID,mRecords.get(position).getID().toString());
+            intent.putExtra(EDIT_RECORD_POSITION, position);
             startActivityForResult(intent, ADD_RECORD);
         };
 
@@ -75,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
             case ADD_RECORD:
                 if (resultCode==RESULT_OK){
                     mRecords.add(ToDoListStorage.getLastRecord());
-                    mAdapter.notifyItemInserted(mRecords.size()-1);
+                    int position = data.getIntExtra(EDIT_RECORD_POSITION,-1);
+                    if (position!=-1) mAdapter.notifyItemChanged(position);
+                    else mAdapter.notifyItemInserted(mRecords.size()-1);
                 }
         }
     }
