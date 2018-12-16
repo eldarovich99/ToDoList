@@ -81,7 +81,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.mDate.setText(date);
         viewHolder.mTitle.setText(record.getTitle());
         Glide.with(viewHolder.itemView).load(record.getPhoto()).into(viewHolder.mPhoto);
-        //photo??
     }
 
     @Override

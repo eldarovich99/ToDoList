@@ -13,12 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 public class ToDoListStorage {
     private static ToDoListStorage toDoListStorage;
-    private Context mContext;
     private static SQLiteDatabase mDatabase;
 
    ToDoListStorage(Context context){
-       mContext = context.getApplicationContext();
-       mDatabase = new DBHelper(mContext).getWritableDatabase();
+       mDatabase = new DBHelper(context).getWritableDatabase();
    }
 
     public static ToDoListStorage get(Context context){
@@ -56,7 +54,7 @@ public class ToDoListStorage {
     }
 
     public static List<SimpleRecord> getRecords(){
-       List<SimpleRecord> records = new ArrayList<SimpleRecord>();
+       List<SimpleRecord> records = new ArrayList<>();
        RecordCursorWrapper cursorWrapper = queryRecords(null, null);
        try{
            cursorWrapper.moveToFirst();
@@ -71,7 +69,18 @@ public class ToDoListStorage {
        return records;
     }
 
-    /*public static SimpleRecord getRecord(UUID id){
+    public static SimpleRecord getLastRecord(){
+        RecordCursorWrapper cursorWrapper = queryRecords(null, null);
+        try{
+            cursorWrapper.moveToLast();
+            return cursorWrapper.getRecord();
+        }
+        finally {
+            cursorWrapper.close();
+        }
+    }
+
+    /*public static SimpleRecord getLastRecord(UUID id){
        return null;
     }*/
     /*public static List<SimpleRecord> getRecords(){
