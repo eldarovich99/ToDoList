@@ -21,8 +21,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_EXTENDED = 2;
     private View.OnClickListener mOnClickListener;
 
-    List<SimpleRecord> mRecords;
-    public MainAdapter(List<SimpleRecord> records, View.OnClickListener onClickListener) {
+    private List<SimpleRecord> mRecords;
+    MainAdapter(List<SimpleRecord> records, View.OnClickListener onClickListener) {
         mRecords = records;
         mOnClickListener = onClickListener;
     }
@@ -53,7 +53,6 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case EXTENDED:
                 return TYPE_EXTENDED;
         }
-        //return super.getItemViewType(position);
         return -1;
     }
 
@@ -95,7 +94,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class MainSimpleViewHolder extends RecyclerView.ViewHolder{
         final TextView mDate;
         final TextView mTitle;
-        public MainSimpleViewHolder(@NonNull View itemView) {
+        MainSimpleViewHolder(@NonNull View itemView) {
             super(itemView);
             mDate = itemView.findViewById(R.id.date_simple_text_view);
             mTitle = itemView.findViewById(R.id.title_simple_text_view);
@@ -105,7 +104,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView mDate;
         TextView mTitle;
         ImageView mPhoto;
-        public MainExtendedViewHolder(@NonNull View itemView) {
+        MainExtendedViewHolder(@NonNull View itemView) {
             super(itemView);
             mDate = itemView.findViewById(R.id.date_extended_text_view);
             mTitle = itemView.findViewById(R.id.title_extended_text_view);

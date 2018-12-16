@@ -42,13 +42,13 @@ public class ToDoListStorage {
     private static RecordCursorWrapper queryRecords(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(DbScheme.ToDoListTable.NAME,
                 null, whereClause, whereArgs, null, null, null);
-        return new RecordCursorWrapper(cursor   );
+        return new RecordCursorWrapper(cursor);
     }
 
     public void updateRecord(SimpleRecord record){
        String id = record.getID().toString();
        ContentValues values = getContentValues(record);
-       mDatabase.update(DbScheme.ToDoListTable.NAME, values, DbScheme.ToDoListTable.Columns.UUID + " = ?", new String[]{id});
+       mDatabase.update(DbScheme.ToDoListTable.NAME, values, DbScheme.ToDoListTable.Columns.UUID + "=?", new String[]{id});
     }
 
     public void addRecord(SimpleRecord record){
@@ -106,13 +106,4 @@ public class ToDoListStorage {
             cursorWrapper.close();
         }
     }
-
-    /*public static SimpleRecord getLastRecord(UUID id){
-       return null;
-    }*/
-    /*public static List<SimpleRecord> getRecords(){
-        SimpleRecord record = new SimpleRecord("Feed the cat", "Buy whiskas");
-        List<SimpleRecord> records = new ArrayList<>(Collections.nCopies(100,record));
-        return records;
-    }*/
 }

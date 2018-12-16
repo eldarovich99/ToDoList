@@ -8,12 +8,12 @@ public  class SimpleRecord {
     private String mTitle;
     private String mText;
     private Date mDate;
+    private Boolean mIsSolved = false;
 
     public UUID getID() {
         return mID;
     }
 
-    private Boolean mIsSolved = false;
 
     public SimpleRecord(String title, String text) {        //constructor for generating records while you add a record
         mID = UUID.randomUUID();

@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                //Remove swiped item from list and notify the RecyclerView
                 final int position = viewHolder.getAdapterPosition();
                 String id = mRecords.get(position).getID().toString();
                 ToDoListStorage.deleteRecord(id);
@@ -74,14 +73,16 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode){
             case ADD_RECORD:
                 if (resultCode==RESULT_OK){
-                    mRecords.add(ToDoListStorage.getLastRecord());
                     int position = data.getIntExtra(EDIT_RECORD_POSITION,-1);
-                    if (position!=-1) mAdapter.notifyItemChanged(position);
-                    else mAdapter.notifyItemInserted(mRecords.size()-1);
+                    if (position!=-1){
+                        mRecords.set(position, ToDoListStorage.getRecord(mRecords.get(position).getID()));
+                        mAdapter.notifyItemChanged(position);
+                    }
+                    else{
+                        mRecords.add(ToDoListStorage.getLastRecord());
+                        mAdapter.notifyItemInserted(mRecords.size()-1);
+                    }
                 }
         }
     }
-
-
-
 }

@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.to_do_list.eldarovich99.todolist.records.ExtendedRecord;
 import com.to_do_list.eldarovich99.todolist.records.ItemType;
 import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
@@ -38,22 +39,28 @@ public class AddRecordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_record);
-        Intent intent = getIntent();
-        String id = intent.getStringExtra(MainActivity.EDIT_RECORD_ID);
-        mPosition = intent.getIntExtra(MainActivity.EDIT_RECORD_POSITION, -1);
         ButterKnife.bind(this);
-        if (id!=null){
-            mRecord = ToDoListStorage.getRecord(UUID.fromString(id));
-            mTitleEditText.setText(mRecord.getTitle());
-            mNoteEditText.setText(mRecord.getText());
-            if (mRecord.defineElement()==ItemType.EXTENDED){
-                mImageUri = ((ExtendedRecord)mRecord).getPhotoUri();
-                mImageView.setImageURI(mImageUri);
-            }
-        }
+        init();
         setTitle(R.string.add_record);
         setOnClickListeners();
     }
+
+    private void init(){
+        Intent intent = getIntent();
+        String id = intent.getStringExtra(MainActivity.EDIT_RECORD_ID);
+        mPosition = intent.getIntExtra(MainActivity.EDIT_RECORD_POSITION, -1);
+        if (id!=null){
+            mRecord = ToDoListStorage.getRecord(UUID.fromString(id));
+                mTitleEditText.setText(mRecord.getTitle());
+                mNoteEditText.setText(mRecord.getText());
+                if (mRecord.defineElement()==ItemType.EXTENDED) {
+                    mImageUri = ((ExtendedRecord) mRecord).getPhotoUri();
+
+                    Glide.with(getApplicationContext()).load(mImageUri).into(mImageView);
+                }
+            }
+    }
+
 
     private void setOnClickListeners() {
         mCancelButton.setOnClickListener(v -> {
@@ -75,6 +82,8 @@ public class AddRecordActivity extends AppCompatActivity {
                         ToDoListStorage.get(getApplicationContext()).addRecord(mRecord);
                     }
                     else{
+                        mRecord.setTitle(mTitleEditText.getText().toString());
+                        mRecord.setText(mNoteEditText.getText().toString());
                         ToDoListStorage.get(getApplicationContext()).updateRecord(mRecord);
                     }
                 }
@@ -84,6 +93,9 @@ public class AddRecordActivity extends AppCompatActivity {
                         ToDoListStorage.get(getApplicationContext()).addRecord(mRecord);
                     }
                     else{
+                        mRecord.setTitle(mTitleEditText.getText().toString());
+                        mRecord.setText(mNoteEditText.getText().toString());
+                        ((ExtendedRecord)mRecord).setPhoto(mImageUri);
                         ToDoListStorage.get(getApplicationContext()).updateRecord(mRecord);
                     }
                 }
@@ -108,7 +120,7 @@ public class AddRecordActivity extends AppCompatActivity {
             case GALLERY_REQUEST:
                 if (resultCode==RESULT_OK) {
                     mImageUri = data.getData();
-                    mImageView.setImageURI(mImageUri);
+                    Glide.with(getApplicationContext()).load(mImageUri).into(mImageView);
                     break;
                 }
             case PHOTO_REQUEST:
