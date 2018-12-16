@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">ToDoList</string>
+    <string name="app_name">Список дел</string>
     <string name="photo">Attached photo</string>
     <string name="cancel">Отмена</string>
     <string name="apply">Apply</string>
     <string name="add_photo">Добавить фото</string>
     <string name="title">Заголовок:</string>
     <string name="text">Текст:</string>
+    <string name="no_title">Введите заголовок</string>
+    <string name="add_record">Добавить запись</string>
 </resources>

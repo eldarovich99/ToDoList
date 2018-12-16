@@ -26,4 +26,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+    /*static void deleteRecord(SQLiteDatabase db, String id){
+        db.delete(DbScheme.ToDoListTable.NAME, "_id=?", new String[] { id });
+        //db.execSQL("DELETE FROM " + DbScheme.ToDoListTable.NAME + " WHERE '" + DbScheme.ToDoListTable.Columns.UUID + "' = '" + id + "'");
+    }*/
 }

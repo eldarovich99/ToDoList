@@ -18,7 +18,7 @@ public class ExtendedRecord extends SimpleRecord {
         mPhoto = photo;
     }
 
-    public Uri getPhoto() {
+    public Uri getPhotoUri() {
         return mPhoto;
     }
 

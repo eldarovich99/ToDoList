@@ -19,10 +19,12 @@ import java.util.Locale;
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_SIMPLE = 1;
     private static final int TYPE_EXTENDED = 2;
+    private View.OnClickListener mOnClickListener;
 
     List<SimpleRecord> mRecords;
-    public MainAdapter(List<SimpleRecord> records) {
+    public MainAdapter(List<SimpleRecord> records, View.OnClickListener onClickListener) {
         mRecords = records;
+        mOnClickListener = onClickListener;
     }
 
     @NonNull
@@ -30,10 +32,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         if(viewType == TYPE_SIMPLE){
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.record_simple, viewGroup, false);
+            view.setOnClickListener(mOnClickListener);
             return new MainSimpleViewHolder(view);
         }
         else if(viewType == TYPE_EXTENDED){
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.record_extended, viewGroup, false);
+            view.setOnClickListener(mOnClickListener);
             return new MainExtendedViewHolder(view);
         }
         else {
@@ -80,7 +84,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 new Locale("ru", "RU")).format( record.getDate());
         viewHolder.mDate.setText(date);
         viewHolder.mTitle.setText(record.getTitle());
-        Glide.with(viewHolder.itemView).load(record.getPhoto()).into(viewHolder.mPhoto);
+        Glide.with(viewHolder.itemView).load(record.getPhotoUri()).into(viewHolder.mPhoto);
     }
 
     @Override

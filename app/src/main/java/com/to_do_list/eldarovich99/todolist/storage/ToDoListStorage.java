@@ -11,11 +11,13 @@ import com.to_do_list.eldarovich99.todolist.records.SimpleRecord;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 public class ToDoListStorage {
     private static ToDoListStorage toDoListStorage;
     private static SQLiteDatabase mDatabase;
 
-   ToDoListStorage(Context context){
+   private ToDoListStorage(Context context){
        mDatabase = new DBHelper(context).getWritableDatabase();
    }
 
@@ -33,7 +35,7 @@ public class ToDoListStorage {
        values.put(DbScheme.ToDoListTable.Columns.SOLVED, record.getSolved());
        values.put(DbScheme.ToDoListTable.Columns.TITLE, record.getTitle());
        values.put(DbScheme.ToDoListTable.Columns.TEXT,record.getText());
-       if (record.defineElement()==ItemType.EXTENDED)values.put(DbScheme.ToDoListTable.Columns.URI, ((ExtendedRecord)record).getPhoto().toString());
+       if (record.defineElement()==ItemType.EXTENDED)values.put(DbScheme.ToDoListTable.Columns.URI, ((ExtendedRecord)record).getPhotoUri().toString());
        return values;
     }
 
@@ -67,6 +69,30 @@ public class ToDoListStorage {
            cursorWrapper.close();
        }
        return records;
+    }
+
+    public static void deleteRecord(String id){
+       String whereClause = DbScheme.ToDoListTable.Columns.UUID + "=?";
+       mDatabase.delete(DbScheme.ToDoListTable.NAME, whereClause, new String[] { id });
+    }
+
+    public static SimpleRecord getRecord(UUID id){
+        RecordCursorWrapper cursorWrapper = queryRecords(null, null);
+        try{
+            cursorWrapper.moveToFirst();
+            while (!cursorWrapper.isAfterLast()) {
+                SimpleRecord record = cursorWrapper.getRecord();
+                UUID uuid = record.getID();
+
+                if (record.getID().compareTo(id)==0)
+                    return cursorWrapper.getRecord();
+                cursorWrapper.moveToNext();
+            }
+        }
+        finally {
+            cursorWrapper.close();
+        }
+        return null;
     }
 
     public static SimpleRecord getLastRecord(){
