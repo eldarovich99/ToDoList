@@ -93,9 +93,10 @@ public class AddRecordActivity extends AppCompatActivity {
                         ToDoListStorage.get(getApplicationContext()).addRecord(mRecord);
                     }
                     else{
-                        mRecord.setTitle(mTitleEditText.getText().toString());
-                        mRecord.setText(mNoteEditText.getText().toString());
-                        ((ExtendedRecord)mRecord).setPhoto(mImageUri);
+                        mRecord = new ExtendedRecord(mRecord.getID(),
+                                mTitleEditText.getText().toString(),
+                                mNoteEditText.getText().toString(),
+                                mRecord.getDate(), false, mImageUri);
                         ToDoListStorage.get(getApplicationContext()).updateRecord(mRecord);
                     }
                 }
